@@ -8,14 +8,15 @@ from aiogram.types import Update, Message
 from handlers import help_handler
 
 
+@dp.message(CommandStart())
+async def process_start_command(message: Message):
+    await message.answer(text='Привет!')
+
+        
 async def main(update):
     bot: Bot = Bot(token=os.environ.get('TOKEN'))
     dp: Dispatcher = Dispatcher()
-
-    @dp.message(CommandStart())
-    async def process_start_command(message: Message):
-        await message.answer(text='Привет!')
-
+    
     dp.include_router(help_handler.router)
 
     await dp.feed_update(bot=bot, update=update)
